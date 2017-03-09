@@ -1,0 +1,32 @@
+{
+  "name": "react-basics",
+  "version": "1.0.0",
+  "description": "Исходный код для курса Основы React",
+  "scripts": {
+    "start": "webpack-dev-server --inline --hot --content-base ./public",
+    "build": "webpack -p"
+  },
+  "dependencies": {
+    "axios": "^0.15.3",
+    "body-parser": "^1.17.1",
+    "errorhandler": "^1.5.0",
+    "material-ui": "^0.17.0",
+    "multer": "^1.3.0",
+    "react": "15.4.2",
+    "react-dom": "15.4.2",
+    "react-tap-event-plugin": "^2.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "6.23.1",
+    "babel-loader": "6.3.2",
+    "babel-preset-es2015": "6.22.0",
+    "babel-preset-react": "6.23.0",
+    "css-loader": "^0.26.4",
+    "react-hot-loader": "1.3.1",
+    "style-loader": "^0.13.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "webpack": "2.2.1",
+    "webpack-dev-server": "2.4.1"
+  }
+}
