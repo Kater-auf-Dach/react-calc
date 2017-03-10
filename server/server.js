@@ -1,6 +1,5 @@
 'use strict'
 const fs = require('fs')
-// const path = require('path')
 const express = require('express')
 const bodyParser = require('body-parser')
 const ObjectId = require('mongodb').ObjectID
@@ -35,7 +34,7 @@ app.get('/api/memory', (req, res) => {
 app.get('/api/memory/latest', (req, res) => {
   let count = parseInt(req.query.last) || 3
   Memory.find()
-    .sort({$natural: 1})
+    .sort({$natural: -1})
     .limit(count)
     .exec((err, result) => {
       res.send(result)
