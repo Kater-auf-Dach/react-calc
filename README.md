@@ -1,7 +1,7 @@
 # React Calculator
 The simple calculator with storage history of operations at a server via API.
 This project use:
-  - React
+  - React + MAterial UI
   - NodeJS + ExpressJS
   - MongoDB + Mongoose
 

@@ -141,7 +141,7 @@ class Calculator extends Component {
         let formattedDate = `${b[2]}-${b[1]}-${b[0]} ${a[1]}`;
 
         let memoryItem = {
-            id: new Date(),
+            _id: new Date(),
             date: formattedDate,
             operation: item
         }
