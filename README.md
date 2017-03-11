@@ -1,9 +1,9 @@
 # React Calculator
 The simple calculator with storage history of operations at a server via API.
 This project use:
-  - React + Material UI
+  - React
   - NodeJS + ExpressJS
-  - MongoDB
+  - MongoDB + Mongoose
 
 ### Installation
 
@@ -18,6 +18,8 @@ or (if you prefer NPM):
 ```sh
 $ npm i
 ```
+If you havn't installed MongoDB, install it as a service. Follow these instructions: [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
+
 
 Then run webpack-dev-server and node server:
 ```sh
@@ -40,6 +42,15 @@ Verify the deployment by runing server and navigating to _127.0.0.1:3000_.
 ```sh
 $ node server/server
 ```
+
+API reference:
+
+ - `GET  to '/api/memory'` - return all memory notes.
+ - `POST to '/api/memory'` - added memory note.
+ - `GET  to '/api/memory/latest'`  - return last notes. Count of notes may be set in query: last=(count). By default it's set 3. 
+ - `GET  to '/api/memory/:id'` - return note by id.
+ - `POST to '/api/memory/:id'` - delete note with such id.
+
 
 License
 ----

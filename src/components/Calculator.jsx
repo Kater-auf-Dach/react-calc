@@ -147,7 +147,10 @@ class Calculator extends Component {
         }
 
         let memory = [...this.state.memory, memoryItem];
-        this.setState({ memory })
+        this.setState({ 
+            memory: memory, 
+            shouldRender: true 
+        })
 
         axios.post('/api/memory', memoryItem)
              .then(res => console.log(res))
@@ -193,7 +196,13 @@ class Calculator extends Component {
                         <div className={styles.digits}>
                             <FlatButton primary={true} className={styles.button} onClick={() => this.handleDigit(0)}>0</FlatButton>
                             <FlatButton primary={true} className={styles.button} onClick={this.handleDot}>.</FlatButton>
-                            <FlatButton secondary={true} className={styles.button} onClick={() => this.toggleMemoryView()}>ME</FlatButton>
+                            <FlatButton 
+                                secondary={true} 
+                                className={styles.button}
+                                disabled={!this.state.memory.length > 0}
+                                onClick={() => this.toggleMemoryView()}>
+                                    ME
+                            </FlatButton>
                             <FlatButton primary={true} className={styles.button} onClick={() => this.handleDigit(1)}>1</FlatButton>
                             <FlatButton primary={true} className={styles.button} onClick={() => this.handleDigit(2)}>2</FlatButton>
                             <FlatButton primary={true} className={styles.button} onClick={() => this.handleDigit(3)}>3</FlatButton>
