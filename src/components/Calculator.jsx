@@ -33,10 +33,12 @@ class Calculator extends Component {
         this.addMemoryItem = this.addMemoryItem.bind(this);
         this.deleteMemoryItem = this.deleteMemoryItem.bind(this);
 
+        this.serverApiUrl = 'https://calcmemoryapi.herokuapp.com';
+
     }
 
     componentDidMount() {
-        axios.get('/api/memory/latest?=3')
+        axios.get(`${this.serverApiUrl}/api/memory/latest`)
              .then(res => res.data)
              .then(memory => this.setState({ 
                  memory: memory,
@@ -59,8 +61,27 @@ class Calculator extends Component {
         const { inputedValue, isNeedOperand, id } = this.state;
 
         if (operator === '=') {
+            let computedResult = parseFloat(eval(inputedValue).toFixed(12));
+            let result = '';
+
+            if (isFinite(computedResult)) {
+              result = computedResult
+            } else {
+                switch (computedResult) {
+                    case Infinity:
+                        result = '∞'
+                        break;
+                    case -Infinity:
+                        result = '-∞'
+                        break;
+                    default:
+                        result = 'Error'
+                        break;
+                }
+            }
+
             this.setState({
-                inputedValue: String(eval(inputedValue)),
+                inputedValue: result,
                 isCalculated: true,
                 isNeedOperand: false
             })
@@ -94,17 +115,28 @@ class Calculator extends Component {
 
     handlePercent() {
         this.setState({
-            inputedValue: String(parseFloat(this.state.inputedValue) / 100)
+            inputedValue: String(parseFloat(this.state.inputedValue) / 100),
+            isCalculated: true
         })
     }
 
     toggleSign() {
-        const { inputedValue, isNumberNegative } = this.state;
+        const { inputedValue, isNumberNegative, isNeedOperand } = this.state;
 
-        if (isNumberNegative || parseFloat(inputedValue) < 0) {
+        if (isNeedOperand) {
+            let valueLength     = inputedValue.length,
+                signlessString  = inputedValue.slice(0, -1),
+                operator        = inputedValue.charAt(inputedValue.length - 1),
+                newValue        = (signlessString * -1) + operator;
+    
+            this.setState({
+                inputedValue: newValue,
+                isNumberNegative: false
+            })
+        } else if (isNumberNegative || inputedValue === '0') {
             this.setState({
                 inputedValue: String(inputedValue * -1),
-                isNumberNegative: false,
+                isNumberNegative: false
             })
         } else {
             this.setState({
@@ -152,7 +184,7 @@ class Calculator extends Component {
             shouldRender: true 
         })
 
-        axios.post('/api/memory', memoryItem)
+        axios.post(`${this.serverApiUrl}/api/memory`, memoryItem)
              .then(res => console.log(res))
              .catch(error => this.handleError(error))
     }
@@ -162,7 +194,7 @@ class Calculator extends Component {
         let memory = this.state.memory.filter(memoryItem => memoryItem._id !== id );
         this.setState({ memory })
 
-       axios.post(`/api/memory/${id}`)
+        axios.post(`${this.serverApiUrl}/api/memory/${id}`)
             .then(res => console.log(res))
             .catch(error => this.handleError(error))
     }
